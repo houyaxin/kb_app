@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta content="telephone=no" name="format-detection" />
+    <title>帖子详情页</title>
+    <link rel="stylesheet" type="text/css" href="./css/travel_detail.css" />
+    <style type="text/css">
+        [v-cloak] {
+            display: none;
+        }
+        /*任何没有加载好的，都不直接显示插值表达式*/
+    </style>
+    <script type="text/javascript" src="./assets/change_resize.js"></script>
+</head>
+
+<body>
+    <div id="app" cloak v-show='flag'>
+	<header>
+            <a class="head-left" href="javascript:history.go(-1);"></a>
+            <h3 class="head-center">帖子详情页</h3>
+        </header>
+        <div class="wraper">
+            <div class="banner">
+                <div class="banner_img">
+                    <img :src="avatarImg?avatarImg.host+avatarImg.dir+avatarImg.filepath+avatarImg.filename:'./images/pretemit.png'" alt="">
+                    <span>{{CityDataList.user_name}}</span>
+                </div>
+                <span class="banner_time">{{CityDataList.create_time|getTimeData}}</span>
+            </div>
+            <div class="main">
+
+                <div class="content">
+                    {{CityDataList.title}}
+		    <div class="brief" v-if="CityDataList.content">{{CityDataList.content}}</div>
+                    <!-- 图片 -->
+                    <div class="pic" v-if="CityDataList.pics">
+                        <div class="one_pic" v-for="(item,index) in CityDataList.pics">
+                            <img :src="item?item.host+item.dir+item.filepath+item.filename:''" alt="">
+                        </div>
+                    </div>
+                    <!-- end 图片 -->
+                    <!-- 视频 -->
+                    <div class="pic" v-if="CityDataList.is_have_video!=0 && videoTip=='mp4'">
+                        <div class="video">
+                            <video x5-playsinline="true" webkit-playsinline="true" playsinline="true" :src="CityDataList?videoList.m3u8:''" controls></video>
+                        </div>
+                    </div>
+                    <!-- end 视频 -->
+                    <!-- 音频  -->
+                    <div v-if='CityDataList.is_have_video!=0 && audioTip'>
+                        <div class="audio">
+                            <audio :src="videoList.host+videoList.dir+videoList.filepath+videoList.filename" ref="audio"></audio>
+                            <div class="button">
+                                <img src="./images/audio2.png" alt="" @click.stop='playVideo'>
+                                <div class="wifi">
+                                    <img src="./images/yinpin3.gif" alt="" v-if='audioFlag'></img>
+                                    <img src='./images/wifi.png' alt='' v-else></img>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end 音频 -->
+                </div>
+            </div>
+            <div class="postion">
+                <div class="address" ref='address'>
+                    <i></i>
+                    <span>{{CityDataList.address}}</span>
+                </div>
+                <a class="report" :href="'report.html?forum_title='+CityDataList.forum_title+'&title='+CityDataList.title+'&id='+CityDataList.id">
+                    <i></i>
+                    <span>举报</span>
+                </a>
+            </div>
+            <div class="hot_comment" v-if='comentData.length!==0'>
+                <div class="hot_comment_sub">
+                    <span>热门评论</span>
+                </div>
+                <div class="hot_comment_text" @click="getAllComment(item.create_time)">
+                    <span>全部评论</span>
+                </div>
+                <div class="hot_comment_container">
+                    <dl class="hot_comment_containerbox" v-for="(item,index) in comentData" :key="index">
+                        <dt>
+							<i class="hot_commented_avatar" v-if='item.avatar==false' style="background:url(./images/pretemit.png) no-repeat center center;"></i>
+							<i class="hot_commented_avatar" v-else :style="'background:url('+item.avatar.host+item.avatar.dir+item.avatar.filepath+item.avatar.filename+') no-repeat; background-size: cover;'"></i>
+							<div class="hot_commentedsub">
+								<span>{{item.user_name}}</span>
+							</div>
+						</dt>
+                        <dd>
+                            <span>{{item.content}}</span>
+                            <span>{{item.create_time | getTimeData}}</span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="bottom_comment">
+            <div class="bottom_commentbox">
+                <div @click="getComment" class="bottom_commentbox_input">
+                    <i class="input_icon"></i>
+                    <input type="text" placeholder="我也要评论..." disabled/>
+                </div>
+                <div class="bottom_commentbox_list" @click='goAllComment(CityDataList.id,index)'>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+        <div class="dialog_comment" v-if="show">
+            <div class="dialog_box">
+                <div class="dialog_header">
+                    <span @click="showCont">取消</span>
+                    <span>写评论</span>
+                    <span @click="sendComment" ref="sendBtn">发送</span>
+                </div>
+                <div class="dialog_content">
+                    <i></i>
+                    <textarea ref="textareaBox" name="" style="resize: none;" v-model='content' @input='changeColor'></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="tips" v-if='showTips'>
+            <span>{{tipMessage}}</span>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="./assets/axios.min.js"></script>
+<script type="text/javascript" src="./assets/vue.js"></script>
+<script type="text/javascript" src="./assets/zepto.min.js"></script>
+<script type="text/javascript" src="./assets/sdk.js"></script>
+<script type="text/javascript" src="./assets/common.js"></script>
+<script type="text/javascript" src="./assets/vconsole.min.js"></script>
+<script type="text/javascript" src="./js/travel_detail.js"></script>
+<script>
+</script>
+
+</html>

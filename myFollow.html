@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的关注</title>
+    <script src="./assets/change_resize.js"></script>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="./css/myFollow.css">
+</head>
+
+<body>
+    <div id="app" v-cloak v-show='flag'>
+         <header>
+            <a class="head-left" @click="goBack()"></a>
+            <h3 class="head-center">我的关注</h3>
+        </header>
+	 <div class="tipics">
+            <ul>
+                <li v-for="(item,index) in tipicsList" :key="index">
+                    <div class="left_pic">
+                        <div class="pic">
+                            <img :src="item.indexpic.host?`${item.indexpic.host}${item.indexpic.dir}${item.indexpic.filepath}${item.indexpic.filename}`:'./images/food.png'" alt="">
+                        </div>
+                        <div class="text">
+                            <h3>#{{item.title}}#</h3>
+                            <p>{{item.cares_num}}人参加</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="./assets/axios.min.js"></script>
+    <script src="./assets/common.js"></script>
+    <script src="./assets/vconsole.min.js"></script>
+    <script src="./assets/zepto.min.js"></script>
+    <script src="./assets/sdk.js"></script>
+    <script src="./assets/vue.js"></script>
+    <script src="./js/myFollow.js"></script>
+</body>
+
+</html>

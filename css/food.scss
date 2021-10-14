@@ -1,0 +1,33 @@
+.top {
+    width: 100%;
+    height: 1.9rem;
+    position: relative;
+    img {
+        width: 100%;
+        height: 100%;
+    }
+    h3 {
+        height: 0.2rem;
+        font-size: 0.14rem;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 1);
+        line-height: 0.2rem;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0.1rem
+    }
+}
+
+.more {
+    margin-top: 0.1rem;
+    padding: 0.1rem 0;
+    background-color: #fff;
+    width: 100%;
+    height: 0.23rem;
+    text-align: center;
+    font-size: 0.12rem;
+    color: #999999;
+    line-height: 0.23rem;
+}

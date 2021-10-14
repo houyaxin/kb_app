@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>看看是谁点了赞</title>
+    <script src="./assets/change_resize.js"></script>
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/index_detail.css">
+</head>
+
+<body>
+    <div id="app">
+	<header>
+            <a class="head-left" href="javascript:history.go(-1);"></a>
+            <h3 class="head-center">看看是谁点了赞</h3>
+        </header>
+        <div class="userList">
+            <ul>
+                <li v-for='(item,index) in dianzanList' :key="index">
+                    <div class="left">
+                        <div class="pic">
+                            <img :src="item.avatarFlag?`${item.avatar.host}${item.avatar.dir}${item.avatar.filepath}${item.avatar.filename}`:'./images/pretemit.png'">
+                        </div>
+                        <span>{{item.user_name}}</span>
+                    </div>
+                    <div class="right">
+                        <span>{{item.create_time | getTimeData}}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="./assets/axios.min.js"></script>
+    <script src="./assets/vue.js"></script>
+    <script src="./assets/sdk.js"></script>
+    <script src="./assets/vconsole.min.js"></script>
+    <script src="./js/index-detail.js"></script>
+</body>
+
+</html>

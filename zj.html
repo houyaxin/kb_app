@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>藏景</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+  <link rel="stylesheet" href="./css/common.css">
+  <link rel="stylesheet" href="./css/zj.css">
+  <link rel="stylesheet" href="./assets/swiper.min.css">
+  <link rel="stylesheet" href="./assets/animate.min.css">
+  <script src="./assets/swiper.min.js"></script>
+  <script src="./assets/change_resize.js"></script>
+  <script src="./assets/swiper.animate.min.js"></script>
+
+  <!--<link rel="stylesheet" href="/dist/css/swiper.min.css">
+<link rel="stylesheet" href="/dist/css/animate.min.css">
+<script src="/dist/js/swiper.min.js"></script>
+<script src="/dist/js/swiper.animate.min.js"></script>-->
+
+</head>
+
+<body>
+  <div id="app" class="swiper-container">
+    <header>
+            <a class="head-left" href="javascript:history.go(-1);"></a>
+            <h3 class="head-center">藏景</h3>
+        </header>
+    <div class="swiper-wrapper">
+      <section class="swiper-slide" :class="`swiper-slide${index+1}`" v-for="(item,index) in list">
+        <a v-if="item.indexpic" :href='"travel_detail.html?id="+item.id'
+          :style="{background:'url('+`${item.indexpic.host}${item.indexpic.dir}${item.indexpic.filepath}${item.indexpic.filename}`+') no-repeat center center'}">
+          <div class="slide-con">
+            <p class="brief">{{item.brief.substring(0,30)}}</p>
+            <p class="title">{{item.title}}</p>
+          </div>
+        </a>
+      </section>
+    </div>
+    <img src="./images/up.png" class="resize"  id="array">
+    <div class="toNext">上滑 查看下一页</div>
+    <div class="swiper-pagination"></div>
+  </div>
+
+  <script src="./assets/vue.js"></script>
+  <script src="./assets/axios.min.js"></script>
+  <script src="./assets/zepto.min.js"></script>
+  <script src="./assets/sdk.js"></script>
+  <!-- <script src="./assets/vconsole.min.js"></script> -->
+  <!-- <script src="./assets/common.js"></script> -->
+  <script src="./js/zj.js"></script>
+  <script>
+    scaleW = window.innerWidth / 320;
+    scaleH = window.innerHeight / 480;
+    var resizes = document.querySelectorAll('.resize');
+    for (var j = 0; j < resizes.length; j++) {
+      resizes[j].style.width = parseInt(resizes[j].style.width) * scaleW + 'px';
+      resizes[j].style.height = parseInt(resizes[j].style.height) * scaleH + 'px';
+      resizes[j].style.top = parseInt(resizes[j].style.top) * scaleH + 'px';
+      resizes[j].style.left = parseInt(resizes[j].style.left) * scaleW + 'px';
+    }
+    var mySwiper = new Swiper('.swiper-container', {
+      direction: 'vertical',
+      pagination: '.swiper-pagination',
+      observer: true,
+      //virtualTranslate : true,
+      mousewheelControl: true,
+      onInit: function (swiper) {
+        swiperAnimateCache(swiper);
+        swiperAnimate(swiper);
+      },
+      onSlideChangeEnd: function (swiper) {
+        swiperAnimate(swiper);
+      },
+      onTransitionEnd: function (swiper) {
+        swiperAnimate(swiper);
+      },
+      watchSlidesProgress: true,
+      onProgress: function (swiper) {
+        for (var i = 0; i < swiper.slides.length; i++) {
+          var slide = swiper.slides[i];
+          var progress = slide.progress;
+          var translate = progress * swiper.height / 4;
+          scale = 1 - Math.min(Math.abs(progress * 0.5), 1);
+          var opacity = 1 - Math.min(Math.abs(progress / 2), 0.5);
+          slide.style.opacity = opacity;
+          es = slide.style;
+          es.webkitTransform = es.MsTransform = es.msTransform = es.MozTransform = es.OTransform = es.transform = 'translate3d(0,' + translate + 'px,-' + translate + 'px) scaleY(' + scale + ')';
+        }
+      },
+      onSetTransition: function (swiper, speed) {
+        for (var i = 0; i < swiper.slides.length; i++) {
+          es = swiper.slides[i].style;
+          es.webkitTransitionDuration = es.MsTransitionDuration = es.msTransitionDuration = es.MozTransitionDuration = es.OTransitionDuration = es.transitionDuration = speed + 'ms';
+
+        }
+      },
+    })         
+  </script>
+</body>
+
+</html>

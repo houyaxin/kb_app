@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta content="telephone=no" name="format-detection" />
+	<title>举报</title>
+	<link rel="stylesheet" type="text/css" href="css/rerport.css" />
+	<script type="text/javascript" src="assets/change_resize.js"></script>
+</head>
+
+<body>
+	<div id="app">
+		<header>
+                  <a class="head-left" href="javascript:history.go(-1);"></a>
+                  <h3 class="head-center">举报</h3>
+                </header>
+		<div class="wrapper">
+			<div class="wrapper_box">
+				<div class="wrapper_modal">
+					<span class="wrapper_sub">举报板块</span>
+					<span class="wrapper_cnt">{{forum_title}}</span>
+				</div>
+				<div class="wrapper_content">
+					<span class="wrapper_sub">举报内容</span>
+					<span class="wrapper_ctt">{{title}}</span>
+				</div>
+				<div class="wrapper_content">
+					<span class="wrapper_sub">举报理由</span>
+					<input @input="inputChage()" class="wrapper_input" type="text" placeholder="尽可能描述你的理由" ref='changeInput' v-model='word' />
+				</div>
+			</div>
+			<div class="wrapper_button" :class="button_flag==true?'wrapper_button_submit':''" @click="getReport">
+				<span>提交</span>
+			</div>
+		</div>
+		<!-- 评论后的反馈 -->
+		<div class="tips" v-if='showTips'>
+				<span>{{tipMessage}}</span>
+			</div>
+	</div>
+</body>
+<script type="text/javascript" src="./assets/axios.min.js"></script>
+<script src="./assets/vue.js"></script>
+   <script src="./assets/vconsole.min.js"></script>
+   <script src="./assets/zepto.min.js"></script>
+   <script src="./assets/sdk.js"></script>
+   <script src="./assets/common.js"></script>
+   <script src="./js/report.js"></script>
+
+</html>

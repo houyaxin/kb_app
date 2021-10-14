@@ -1,0 +1,92 @@
+.tipics .head-left {
+    background: url("../images/back.png") no-repeat left top;
+    background-size: 0.16rem 0.16rem;
+    display: block;
+    width: .16rem;
+    height: .16rem;
+}
+.tipics {
+    padding: 0 0.12rem;
+    border-bottom: 1px solid #eee;
+    background: url("../images/htxq_header_bg.png") no-repeat left top;
+    background-size: 3.75rem 2.22rem;
+    height: 1.6rem;
+    padding-top: 0.62rem;
+    position:fixed;
+    width:100%;
+    z-index:999;
+}
+
+.tipics .tipics_top {
+    margin-top: 0.14rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tipics .left_pic {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tipics .left_pic .pic {
+    width: 0.57rem;
+    height: 0.57rem;
+}
+
+.tipics .left_pic .pic img {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.02rem;
+}
+
+.tipics .left_pic .text {
+    margin-left: 0.12rem;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    margin-top: 0.07rem;
+}
+
+.tipics .left_pic .text h3 {
+    font-size: 0.15rem;
+    color: #fff;
+    font-weight: 400;
+    line-height: 0.21rem;
+    margin-bottom: 0.05rem;
+}
+
+.tipics .left_pic .text p {
+    font-size: 0.11rem;
+    color: rgba(255, 255, 255, 0.80);
+    line-height: 0.16rem;
+}
+
+.tipics .follow {
+    width: 0.56rem;
+    height: 0.26rem;
+    margin-top: 0.15rem;
+    margin-right:0.24rem;
+}
+
+
+.tipics .follow a {
+    width: 0.56rem;
+    height: 0.26rem;
+    line-height: 0.26rem;
+    display: inline-block;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.51);
+    font-size: .12rem;
+    color: #fff;
+    border-radius: 0.135rem;
+}
+
+.tipics_brief {
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-size: 0.12rem;
+    color: rgba(255, 255, 255, 0.80);
+    line-height: 0.16rem;
+    margin-top: 0.16rem;
+}
+.newThings{
+   padding-top:2.1rem;
+}

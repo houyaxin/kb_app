@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <script src="./assets/change_resize.js"></script>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/food.css">
+
+
+</head>
+
+<body>
+    <div id="app" v-cloak v-show='flag'>
+        <!-- <div class="top" v-if='h'>
+            <img :src="topPic.background?`${topPic.background.host}${topPic.background.dir}${topPic.background.filepath}${topPic.background.filename}`:''" alt="" alt="">
+            <h3><span>{{topPic.title}}</span></h3>
+        </div> -->
+        <header>
+            <a class="head-left" href="javascript:history.go(-1);"></a>
+            <h3 class="head-center">{{documentTitle}}</h3>
+        </header>
+        <div class="newThings">
+            <div v-for='(item,index) in CityDataList' :key="index">
+                <a :href='"travel_detail.html?id="+item.id'>
+                    <div class="gray"></div>
+                    <div class="news">
+                        <div class="user">
+                            <div class="left">
+                                <img :src="item.user_info.avatar==false?'./images/pretemit.png':`${item.user_info.avatar.host}${item.user_info.avatar.filename}`" alt="">
+                                <div class="name">
+                                    <p>{{item.user_info.user_name}}</p>
+                                    <span>{{item.create_time | getTimeData}}</span>
+                                </div>
+                            </div>
+                            <!-- 已做是否关注判断 -->
+                            <div class="follow">
+                                <div class="followed" v-if='item.user_care' @click.stop="deleteFollowed(index,item.user_id)" :data_id="item.user_id">
+                                    <img src="./images/followed.png" alt="">
+                                </div>
+                                <div class="add_follow" v-else @click.stop="getFollowed(index,item.user_id)" :data_id="item.user_id">
+                                    <img src="./images/follow.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            {{item.title}}
+                        </div>
+
+                        <!-- 三张或更多 -->
+                        <div class="pic" v-if="item.pics_num>=3">
+                            <ul>
+                                <li>
+                                    <img :src="item.pics[0]?`${item.pics[0].host}${item.pics[0].dir}${item.pics[0].filepath}${item.pics[0].filename}`:''" alt="">
+                                </li>
+                                <li>
+                                    <img :src="item.pics[1]?`${item.pics[1].host}${item.pics[1].dir}${item.pics[1].filepath}${item.pics[1].filename}`:''" alt="">
+                                </li>
+                                <li>
+                                    <img :src="item.pics[2]?`${item.pics[2].host}${item.pics[2].dir}${item.pics[2].filepath}${item.pics[2].filename}`:''" alt="">
+                                    <div class="group" v-if="item.pics_num>3">
+                                        <img src="./images/group2.png" alt="">
+                                        <span>{{item.pics_num}}</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- 一张-->
+                        <div class="pic" v-if="item.pics_num==1">
+                            <div class="color">
+                                <div class="one_pic">
+                                    <img :src="item.pics[0]?`${item.pics[0].host}${item.pics[0].dir}${item.pics[0].filepath}${item.pics[0].filename}`:''" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="address" v-if='item.address'>
+                            <img src="./images/address.png" alt="">
+                            <span>{{item.address}}</span>
+                        </div>
+                        <!-- 两张 -->
+                        <div class="pic" v-if="item.pics_num==2">
+                            <div class="two_pic">
+                                <ul>
+                                    <li style="margin-right: 0.05rem;">
+                                        <img :src="item.pics[0]?`${item.pics[0].host}${item.pics[0].dir}${item.pics[0].filepath}${item.pics[0].filename}`:''" alt="" alt="">
+                                    </li>
+                                    <li>
+                                        <img :src="item.pics[1]?`${item.pics[1].host}${item.pics[1].dir}${item.pics[1].filepath}${item.pics[1].filename}`:''" alt="" alt="">
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- 视频 -->
+                        <div class="pic" v-if="item.is_have_video!=0&&item.video.mtype">
+                            <div class="video">
+                                <!-- <video src="/" poster="./images/03.jpg"></video> -->
+                                <video x5-playsinline="true" webkit-playsinline="true" playsinline="true" :src="`${item.video.host}${item.video.dir}${item.video.filename}.${item.video.mtype}`" controls :poster="item.indexpic?`${item.indexpic.host}${item.indexpic.dir}${item.indexpic.filepath}${item.indexpic.filename}`:''"></video>
+                                <!-- <div class="btn">
+                                        <img src="./images/play.png" alt="">
+                                        <span>1:36</span>
+                                </div> -->
+                            </div>
+                        </div>
+                        <!-- 音频 -->
+                        <div class="pic" v-if='item.is_have_video!=0&&item.video.is_audio==1'>
+                            <div class="audio">
+                                <!-- <video src="/" poster="./images/03.jpg"></video> -->
+                                <audio :src="`${item.video.host}${item.video.dir}${item.video.filepath}${item.video.filename}`" ref="audio"></audio>
+                                <div class="btn" @click.stop='playVideo'>
+                                    <img src="./images/audio2.png" alt="">
+                                    <div class="wifi">
+                                        <img src="./images/yinpin3.gif" alt="" v-if='audioFlag'></img>
+                                        <img src='./images/wifi.png' alt='' v-else></img>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 文字 -->
+                        <div class="picText" v-if="item.multi_radio==0&item.pics_num==0&item.is_have_video==0">
+
+                        </div>
+
+                        <!-- 点赞人头像 -->
+                        <div class="people" v-show="item.praise_num!=0" @click.stop="getAllPeople(index,item.id)">
+                            <div class="avatar">
+                                <div class="avatar_img" v-for='(itemUser,index1) in item.praise_userinfo' style="overflow:hidden;">
+                                    <img src="./images/pretemit.png" alt="" :key="index1" v-if='!itemUser.avatar || !itemUser.avatar.host'>
+                                    <img :src="`${itemUser.avatar.host}${itemUser.avatar.dir}${itemUser.avatar.filepath}${itemUser.avatar.filename}`" v-if='itemUser.avatar && itemUser.avatar.host'>
+                                </div>
+                            </div>
+                            <div class="good">
+                                <span>{{item.praise_num}}赞</span>
+                                <img src="./images/right.png" alt="">
+                            </div>
+                        </div>
+                        <!-- 是否有点赞数？ -->
+                        <div class="last">
+                            <ul>
+                                <li @click="deleteDianzan(index,item.id)" :data_id="item.id" v-if='item.is_praise'>
+                                    <img src="./images/dianzanOrange.png" alt="">
+                                    <!-- <span class="text" v-else>点赞</span> -->
+                                </li>
+                                <li @click.stop="dianzan(index,item.id)" :data_id="item.id" v-else>
+                                    <img src="./images/dianzan.png" alt="">
+                                    <!-- <span class="text" v-else>点赞</span> -->
+                                </li>
+                                <li @click.stop='shareAll(index,item.id)'>
+                                    <img src="./images/share.png" alt="">
+                                    <!-- <span class="text">分享</span> -->
+                                </li>
+                                <li @click.stop='getComment(index,item.id)'>
+                                    <img src="./images/comment.png" alt="">
+                                    <!-- <span class="text">评论</span> -->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- 评论框 -->
+            <div class="dialog_comment" v-if="show">
+                <div class="dialog_box">
+                    <div class="dialog_header">
+                        <span @click="showCont">取消</span>
+                        <span>写评论</span>
+                        <span @click="sendComment()" ref="sendBtn">发送</span>
+                    </div>
+                    <div class="dialog_content">
+                        <i></i>
+                        <textarea name="" style="resize: none;" v-model='content' ref="textareaBox" autofocus @input='changeColor'></textarea>
+                    </div>
+                </div>
+            </div>
+            <!-- 评论后的反馈 -->
+            <div class="tips" v-if='showTips'>
+                <span>{{tipMessage}}</span>
+            </div>
+            <!-- <div class="more" @click="getmore" v-if='flagMore'>
+                加载更多
+            </div> -->
+        </div>
+
+
+    </div>
+    </div>
+    <script src="./assets/vue.js"></script>
+    <script src="./assets/axios.min.js"></script>
+    <script src="./assets/zepto.min.js"></script>
+    <script src="./assets/sdk.js"></script>
+    <script src="./assets/vconsole.min.js"></script>
+    <script src="./assets/common.js"></script>
+    <script src="./js/food.js"></script>
+</body>
+
+</html>

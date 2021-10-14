@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta content="telephone=no" name="format-detection" />
+    <title>发帖</title>
+    <link rel="stylesheet" type="text/css" href="css/post.css" />
+    <script type="text/javascript" src="assets/change_resize.js"></script>
+    <script type="text/javascript" src="assets/zepto.min.js"></script>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <header>
+            <a class="head-left" @click="goBack()"></a>
+            <h3 class="head-center">发帖</h3>
+        </header>
+        <div class="wrapper">
+            <div class="wrapper_header">
+                <span class="wrapper_sub">主题</span>
+                <div class="wrapper_choose" @click="getSortData()">
+                    <span>{{topicName}}</span>
+                    <i></i>
+                </div>
+            </div>
+            <div class="wrapper_box">
+                <div class="wrapper_box_content">
+                    <textarea @input="descArea()" v-model="content" style="resize: none;"
+                        placeholder="说些什么..."></textarea>
+                </div>
+                <div class="wrapper_box_files">
+                    <div v-for="(item,key) in imgArr" :key="item.index">
+                        <img :src="item.src" />
+                        <span class="close_img" @click="delImg(key)"></span>
+                    </div>
+                    <div v-for="(item,key) in videoArr" :key="item.index">
+                        <video>
+                            <source :src="item.src" type="video/mp4">
+                            </source>
+                        </video>
+                        <span class="close_img" @click="delVid(key)"></span>
+                    </div>
+                    <div class="voicePic" v-for="(item,key) in audioArr" :key="item.index">
+                        <audio :src="item.src"></audio>
+                        <span class="close_img" @click="delAud(key)"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper_lists">
+                <span class="wrapper_picture" @click="addPic()">
+                    <input name="files" id="uploaderInput" type="file" accept="image/*" multiple />
+                </span>
+                <span class="wrapper_video" @click="addVideo()">
+                    <input name="video" type="file" id='videoInput' accept="video/*" multiple>
+                </span>
+                <span class="wrapper_audio" @click="addAudio()">
+                    <input name="audio" type="file" id='audioInput' accept="audio/*" multiple>
+                </span>
+            </div>
+            <!-- <div class="wrapper_position">
+                <i></i>
+                <span>你在哪里</span>
+            </div> -->
+            <div class="wrapper_button" @click="getSubmit()">
+                <span>提交</span>
+            </div>
+        </div>
+        <div class="dialog" v-if="show">
+            <div class="dialog_box">
+                <!-- <div><span>全部</span></div> -->
+                <div v-for="(list,key) in selectLists" :class="{checked:key == num}" :key="list.key"
+                    @click="getTopic(list,key)"><span>{{list.title}}</span></div>
+            </div>
+        </div>
+        <!-- 反馈 -->
+        <div class="tips" v-if='showTips'>
+            <span>{{tipMessage}}</span>
+        </div>
+    </div>
+</body>
+<script src="./assets/axios.min.js"></script>
+<script src="./assets/vue.js"></script>
+<script src="./assets/zepto.min.js"></script>
+<script src="./assets/sdk.js"></script>
+<script src="./assets/common.js"></script>
+<script src="./assets/vconsole.min.js"></script>
+<script src="./js/post.js"></script>
+
+</html>

@@ -1,0 +1,74 @@
+header {
+    padding: .49rem 0 .1rem;
+    box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.08);
+    background: url(../images/htxq_header_bg.png) no-repeat left top;
+    background-size: 100% 0.81rem;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+}
+header .head-left {
+    position:absolute;
+    left:0.12rem;
+    background: url("../images/back.png") no-repeat left top;
+    background-size: 0.16rem 0.16rem;
+    display: block;
+    width: .16rem;
+    height: .16rem;
+}
+header .head-center {
+    font-size: .18rem;
+    color: #fff;
+    font-family: SourceHanSansCN, SourceHanSansCN-Regular;
+    text-align:center;
+    font-weight: 400;
+    margin-top:-0.05rem;
+}
+.tipics{
+padding-top:0.8rem;
+}
+.tipics li {
+  margin: 0.12rem;
+  padding-bottom: 0.12rem;
+  display: flex;
+  justify-content: space-between;
+  height: 0.57rem;
+  border-bottom: 0.005rem solid #EEE;
+}
+
+.tipics li .left_pic {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tipics li .left_pic .pic {
+  width: 0.57rem;
+  height: 0.57rem;
+}
+
+.tipics li .left_pic .pic img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.03rem;
+}
+
+.tipics li .left_pic .text {
+  margin-left: 0.12rem;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  margin-top: 0.07rem;
+}
+
+.tipics li .left_pic .text h3 {
+  font-size: 0.15rem;
+  color: #222;
+  font-weight: 400;
+  line-height: 0.21rem;
+  margin-bottom: 0.05rem;
+}
+
+.tipics li .left_pic .text p {
+  font-size: 0.11rem;
+  color: #b9b9b9;
+  line-height: 0.16rem;
+}
