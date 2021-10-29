@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <meta content="telephone=no" name="format-detection" />
     <title>帖子详情页</title>
     <link rel="stylesheet" type="text/css" href="./css/travel_detail.css" />
@@ -11,6 +12,7 @@
         [v-cloak] {
             display: none;
         }
+
         /*任何没有加载好的，都不直接显示插值表达式*/
     </style>
     <script type="text/javascript" src="./assets/change_resize.js"></script>
@@ -18,23 +20,21 @@
 
 <body>
     <div id="app" cloak v-show='flag'>
-	<header>
-            <a class="head-left" href="javascript:history.go(-1);"></a>
-            <h3 class="head-center">帖子详情页</h3>
+        <header>
+            <a class="head-left" @click="goBack()"></a>
+            <h3 class="head-center">{{CityDataList.title}}</h3>
         </header>
         <div class="wraper">
             <div class="banner">
                 <div class="banner_img">
-                    <img :src="avatarImg?avatarImg.host+avatarImg.dir+avatarImg.filepath+avatarImg.filename:'./images/pretemit.png'" alt="">
+                    <img :src="avatarImg?avatarImg.host+avatarImg.dir+avatarImg.filepath+avatarImg.filename:'./images/pretemit.png'"
+                        alt="">
                     <span>{{CityDataList.user_name}}</span>
                 </div>
                 <span class="banner_time">{{CityDataList.create_time|getTimeData}}</span>
             </div>
             <div class="main">
-
                 <div class="content">
-                    {{CityDataList.title}}
-		    <div class="brief" v-if="CityDataList.content">{{CityDataList.content}}</div>
                     <!-- 图片 -->
                     <div class="pic" v-if="CityDataList.pics">
                         <div class="one_pic" v-for="(item,index) in CityDataList.pics">
@@ -45,14 +45,16 @@
                     <!-- 视频 -->
                     <div class="pic" v-if="CityDataList.is_have_video!=0 && videoTip=='mp4'">
                         <div class="video">
-                            <video x5-playsinline="true" webkit-playsinline="true" playsinline="true" :src="CityDataList?videoList.m3u8:''" controls></video>
+                            <video x5-playsinline="true" webkit-playsinline="true" playsinline="true"
+                                :src="CityDataList?videoList.m3u8:''" controls></video>
                         </div>
                     </div>
                     <!-- end 视频 -->
                     <!-- 音频  -->
                     <div v-if='CityDataList.is_have_video!=0 && audioTip'>
                         <div class="audio">
-                            <audio :src="videoList.host+videoList.dir+videoList.filepath+videoList.filename" ref="audio"></audio>
+                            <audio :src="videoList.host+videoList.dir+videoList.filepath+videoList.filename"
+                                ref="audio"></audio>
                             <div class="button">
                                 <img src="./images/audio2.png" alt="" @click.stop='playVideo'>
                                 <div class="wifi">
@@ -63,6 +65,7 @@
                         </div>
                     </div>
                     <!-- end 音频 -->
+                    <div class="brief" v-if="CityDataList.content" v-html="CityDataList.content"></div>
                 </div>
             </div>
             <div class="postion">
@@ -70,7 +73,7 @@
                     <i></i>
                     <span>{{CityDataList.address}}</span>
                 </div>
-                <a class="report" :href="'report.html?forum_title='+CityDataList.forum_title+'&title='+CityDataList.title+'&id='+CityDataList.id">
+                <a class="report" @click="goReport()">
                     <i></i>
                     <span>举报</span>
                 </a>
@@ -85,12 +88,14 @@
                 <div class="hot_comment_container">
                     <dl class="hot_comment_containerbox" v-for="(item,index) in comentData" :key="index">
                         <dt>
-							<i class="hot_commented_avatar" v-if='item.avatar==false' style="background:url(./images/pretemit.png) no-repeat center center;"></i>
-							<i class="hot_commented_avatar" v-else :style="'background:url('+item.avatar.host+item.avatar.dir+item.avatar.filepath+item.avatar.filename+') no-repeat; background-size: cover;'"></i>
-							<div class="hot_commentedsub">
-								<span>{{item.user_name}}</span>
-							</div>
-						</dt>
+                            <i class="hot_commented_avatar" v-if='item.avatar==false'
+                                style="background:url(./images/pretemit.png) no-repeat center center;"></i>
+                            <i class="hot_commented_avatar" v-else
+                                :style="'background:url('+item.avatar.host+item.avatar.dir+item.avatar.filepath+item.avatar.filename+') no-repeat; background-size: cover;'"></i>
+                            <div class="hot_commentedsub">
+                                <span>{{item.user_name}}</span>
+                            </div>
+                        </dt>
                         <dd>
                             <span>{{item.content}}</span>
                             <span>{{item.create_time | getTimeData}}</span>
@@ -103,7 +108,7 @@
             <div class="bottom_commentbox">
                 <div @click="getComment" class="bottom_commentbox_input">
                     <i class="input_icon"></i>
-                    <input type="text" placeholder="我也要评论..." disabled/>
+                    <input type="text" placeholder="我也要评论..." disabled />
                 </div>
                 <div class="bottom_commentbox_list" @click='goAllComment(CityDataList.id,index)'>
                     <span></span>
@@ -119,7 +124,8 @@
                 </div>
                 <div class="dialog_content">
                     <i></i>
-                    <textarea ref="textareaBox" name="" style="resize: none;" v-model='content' @input='changeColor'></textarea>
+                    <textarea ref="textareaBox" name="" style="resize: none;" v-model='content'
+                        @input='changeColor'></textarea>
                 </div>
             </div>
         </div>

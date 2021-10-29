@@ -19,7 +19,8 @@
          flagMore: true,
          hasLogin: undefined,
          access_token: undefined,
-         storage: window.localStorage
+         storage: window.localStorage,
+         url: 'http://mapi.kangbatv.com/h5/kb_app'
      },
      filters: {
          getTimeData(dataTime) {
@@ -60,7 +61,7 @@
                  a: "postList",
                  count: _this.count,
                  offset: (_this.page - 1) * _this.count,
-                 is_hot:1,
+                 is_hot: 1,
                  custom_appid: 462,
                  custom_appkey: 'Qa91EuWbUVAQybDRIBQnmsAR3qC6NIst'
              }
@@ -71,7 +72,7 @@
                      })
                      .then(
                          res => {
-		            console.log(res.data,'话题列表')
+                             console.log(res.data, '话题列表')
                              if (res.data.ErrorCode || res.data.ErrorText) {
                                  return
                              }
@@ -139,8 +140,8 @@
                  })
                  .then(
                      res => {
-                          if (res.data.ErrorCode || res.data.ErrorText) {
-                            _this.CityDataList[index].user_care = 1;
+                         if (res.data.ErrorCode || res.data.ErrorText) {
+                             _this.CityDataList[index].user_care = 1;
                          }
                      }
                  )
@@ -194,7 +195,7 @@
          // post_id  帖子ID
          getDianzanData(index, id) {
              const _this = this;
-	     console.log(_this.hasLogin, '点赞关注_this.hasLogin')
+             console.log(_this.hasLogin, '点赞关注_this.hasLogin')
              if (!_this.hasLogin) {
                  console.log('login')
                  SmartCity.goLogin();
@@ -216,10 +217,10 @@
                  })
                  .then(
                      res => {
-			console.log(res.data,'点赞')
-                       //  if (res.data.ErrorCode || res.data.ErrorText) {
+                         console.log(res.data, '点赞')
+                         //  if (res.data.ErrorCode || res.data.ErrorText) {
                          //    return
-                        // }
+                         // }
                          let praise_userinfoList = _this.CityDataList[index].praise_userinfo;
                          praise_userinfoList.unshift(res.data);
                          _this.CityDataList[index].is_praise = 1;
@@ -256,12 +257,12 @@
                  })
                  .then(
                      res => {
-			console.log(res.data,'取消点赞')
-                        // if (res.data.ErrorCode || res.data.ErrorText) {
-                          //   return
-                        // }
+                         console.log(res.data, '取消点赞')
+                         // if (res.data.ErrorCode || res.data.ErrorText) {
+                         //   return
+                         // }
                          _this.CityDataList[index].is_praise = 0;
-		       	_this.CityDataList[index].praise_num--;
+                         _this.CityDataList[index].praise_num--;
                          _this.CityDataList[index].praise_userinfo.forEach((key, index1) => {
                              if (key.user_id == res.data.user_id) {
                                  _this.CityDataList[index].praise_userinfo.splice(index1, 1)
@@ -293,7 +294,7 @@
              }
              if (audioEle) {
                  audioEle.loop = false;
-                 audioEle.addEventListener('ended', function() {
+                 audioEle.addEventListener('ended', function () {
                      _this.audioFlag = false;
                  }, false);
              }
@@ -306,10 +307,10 @@
 
          // 发表评论
          getComment(index, id) {
-		console.log(index,'index');
-		console.log(id,'id')
+             console.log(index, 'index');
+             console.log(id, 'id')
              event.preventDefault();
-		console.log(this.hasLogin, '发表评论_this.hasLogin')
+             console.log(this.hasLogin, '发表评论_this.hasLogin')
              if (!this.hasLogin) {
                  console.log('login')
                  SmartCity.goLogin();
@@ -317,7 +318,7 @@
              }
              this.show = !this.show;
              this.post_id = id;
-             this.$nextTick(function() {
+             this.$nextTick(function () {
                  this.$refs.textareaBox.focus()
              })
          },
@@ -339,7 +340,7 @@
              SmartCity.shareTo(param);
          },
 
-         showCont: function() {
+         showCont: function () {
              this.show = !this.show;
          },
          // 创建评论  m=Apibbs&c=post&a=comment
@@ -367,7 +368,7 @@
                          }, 1500)
 
                          _this.showTips = true;
-			console.log(res.data,'创建评论')
+                         console.log(res.data, '创建评论')
                          if (res.data.ErrorCode) {
                              _this.tipMessage = res.data.ErrorText
                              _this.content = ''
@@ -381,18 +382,18 @@
          // 获取用户信息
          _initUserInfo() {
              const _this = this;
-             SmartCity.getUserInfo(function(res) {
+             SmartCity.getUserInfo(function (res) {
                  if (res && res.userInfo) {
                      _this.access_token = res.userInfo.userTokenKey;
                      _this.storage.setItem('access_token', _this.access_token);
-		     _this.hasLogin = new UserInfo().isLogin(_this.storage.getItem('access_token'));
+                     _this.hasLogin = new UserInfo().isLogin(_this.storage.getItem('access_token'));
                  }
                  //_this.promiseAll()
              })
          },
          promiseAll() {
              const _this = this;
-             Promise.all([ _this.getCityData()]).then(function(result) {
+             Promise.all([_this.getCityData()]).then(function (result) {
                  _this.CityDataList = result[0];
                  _this.flag = true;
              })
@@ -423,16 +424,25 @@
          getScrollHeight() {
              return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
          },
-	 _hideTop() {
-            SmartCity.hideTopView({
-                isShow: 0            })
-        }
+         _hideTop() {
+             SmartCity.hideTopView({
+                 isShow: 0
+             })
+         },
+         goDetail(id, index) {
+             SmartCity.linkTo({
+                 innerLink: `${this.url}/travel_detail.html?id=${id}`
+             });
+         },
+         goBack() {
+             SmartCity.goBack();
+         },
      },
      created() {
-	 this._hideTop();
-	 this._initUserInfo();
+         this._hideTop();
+         this._initUserInfo();
          this.promiseAll()
-        // new VConsole();
+         // new VConsole();
          //滚动事件触发
          window.addEventListener('scroll', () => {
              if (this.getScrollTop() + this.getClientHeight() == this.getScrollHeight()) {

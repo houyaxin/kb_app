@@ -47,8 +47,8 @@ var vm = new Vue({
                 .then(
                     res => {
                         _this.allCommentList = res.data;
-                       console.log(res.data,'data'); 
-		    }
+                        console.log(res.data, 'data');
+                    }
                 )
         },
         dianzan(index, id) {
@@ -76,9 +76,18 @@ var vm = new Vue({
             if (r != null) return r[2];
             return null;
         },
+        goBack() {
+            SmartCity.goBack();
+        },
+        _hideTop() {
+            SmartCity.hideTopView({
+                isShow: 0
+            })
+        }
     },
     created() {
         this.getAllComment();
+        this._hideTop();
         // console.log(this.GetQueryString("id"))
 
     },

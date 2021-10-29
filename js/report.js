@@ -64,7 +64,6 @@ var vm = new Vue({
  				config = {
  					headers: {
  						'Content-Type': 'application/json'
- 				
  					}
  				}
  				url = _this.host;
@@ -118,7 +117,9 @@ var vm = new Vue({
 				}
             })
 		},
-		
+		goBack() {
+			SmartCity.goBack();
+		}
         
  	},
  	created() {

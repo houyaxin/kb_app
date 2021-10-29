@@ -17,7 +17,7 @@
         <header>
             <a class="head-left" @click="goBack()"></a>
             <h3 class="head-center">选择感兴趣的话题</h3>
-            <a class="head-right" :href='"myFollow.html"'>我的</a>
+            <a class="head-right" @click="goMyFollow()">我的</a>
         </header>
         <div class="tipics">
             <div class="left">
@@ -28,7 +28,7 @@
             <div class="right">
                 <ul>
                     <li v-for="(item,index) in cityTipicList" :key="index">
-                        <a class="left_pic" :href='"htxq_list.html?id="+item.id'>
+                        <a class="left_pic" @click="goHtxqList(item.id)">
                             <div class="pic">
                                 <img :src="item.indexpic.host?`${item.indexpic.host}${item.indexpic.dir}${item.indexpic.filepath}${item.indexpic.filename}`:'./images/food.png'" alt="">
                             </div>

@@ -33,7 +33,8 @@ var vm = new Vue({
         avatarFlag: false,
         hasLogin: undefined,
         storage: window.localStorage,
-        index: undefined
+        index: undefined,
+        url: 'http://mapi.kangbatv.com/h5/kb_app'
     },
     filters: {
         getTimeData(dataTime) {
@@ -185,14 +186,15 @@ var vm = new Vue({
             event.preventDefault();
             this.followData(index, user_id)
         },
-	// 添加关注-话题
+        // 添加关注-话题
         getFollowedTopic(index, user_id) {
             event.preventDefault();
             this.followDataTopic(index, user_id)
         },
         followDataTopic(index, user_id) {
             var user_id = user_id;
-             console.log(index); console.log(user_id);
+            console.log(index);
+            console.log(user_id);
             const _this = this;
             if (!_this.hasLogin) {
                 console.log('login')
@@ -219,10 +221,10 @@ var vm = new Vue({
                 .then(
                     res => {
                         if (res.data.ErrorCode || res.data.ErrorText) {
-                        
-			    _this.tipicDetail.isMyCare = 1;
+
+                            _this.tipicDetail.isMyCare = 1;
                         }
-                         console.log(res.data,'1222222');
+                        console.log(res.data, '1222222');
                     }
                 )
         },
@@ -277,12 +279,12 @@ var vm = new Vue({
             event.preventDefault();
             this.deleteFollowData(index, user_id)
         },
-	// 取消关注-话题   base_url?m=Apibbs&c=care&a=deleteCare
+        // 取消关注-话题   base_url?m=Apibbs&c=care&a=deleteCare
         deleteFollowedTopic(index, user_id) {
             event.preventDefault();
             this.deleteFollowDataTopic(index, user_id)
         },
-	deleteFollowDataTopic(index, user_id) {
+        deleteFollowDataTopic(index, user_id) {
             // console.log(index);
             const _this = this;
             if (!_this.hasLogin) {
@@ -310,7 +312,7 @@ var vm = new Vue({
                 .then(
                     res => {
                         if (res.data.care) {
-                             _this.tipicDetail.isMyCare = 0;
+                            _this.tipicDetail.isMyCare = 0;
                         }
                         console.log(res.data);
                     }
@@ -369,7 +371,7 @@ var vm = new Vue({
             //     SmartCity.goLogin();
             //     return
             // }
-	   param = {
+            param = {
                 m: "Apibbs",
                 c: "post",
                 a: "postsForCarePeople",
@@ -377,19 +379,19 @@ var vm = new Vue({
                 count: _this.count,
                 // site_Id: 10188,
                 custom_appid: 462,
-	        forum_id: _this.GetQueryString("id"),
+                forum_id: _this.GetQueryString("id"),
                 access_token: _this.access_token,
-               // access_token: 'ab47875ec2355ddf24516b94e8037cfe',
+                // access_token: 'ab47875ec2355ddf24516b94e8037cfe',
                 custom_appkey: 'Qa91EuWbUVAQybDRIBQnmsAR3qC6NIst'
             }
-	    console.log(param,'param');
+            console.log(param, 'param');
             url = _this.host;
             axios.get(url, {
                     params: param
                 })
                 .then(
                     res => {
-			console.log(res.data,'好友动态')
+                        console.log(res.data, '好友动态')
                         if (res.data.ErrorCode || res.data.ErrorText) {
                             return
                         }
@@ -460,7 +462,7 @@ var vm = new Vue({
                         _this.CityDataList[index].praise_num++;
                         // console.log(_this.CityDataList[index].praise_userinfo[0].user_id)
                         _this.user_id = _this.CityDataList[index].praise_userinfo[0].user_id
-                            // _this.getCityData();
+                        // _this.getCityData();
                     }
                 )
         },
@@ -568,7 +570,7 @@ var vm = new Vue({
             }
             if (audioEle) {
                 audioEle.loop = false;
-                audioEle.addEventListener('ended', function() {
+                audioEle.addEventListener('ended', function () {
                     _this.audioFlag = false;
                     //在这个方法里写相应的逻辑就可以了
 
@@ -591,7 +593,7 @@ var vm = new Vue({
             this.show = !this.show;
             this.post_id = id;
 
-            this.$nextTick(function() {
+            this.$nextTick(function () {
                 this.$refs.textareaBox.focus()
             })
         },
@@ -676,7 +678,7 @@ var vm = new Vue({
         // 获取用户信息
         _initUserInfo() {
             var _this = this;
-            SmartCity.getUserInfo(function(res) {
+            SmartCity.getUserInfo(function (res) {
                 if (res && res.userInfo) {
                     _this.access_token = res.userInfo.userTokenKey;
                     _this.storage.setItem('access_token', _this.access_token)
@@ -686,11 +688,16 @@ var vm = new Vue({
             })
 
         },
-        goDetail(index, id) {
-            let link = `xiangqing/NewsDetailStyle6?id=${id}`
+        // goDetail(index, id) {
+        //     let link = `xiangqing/NewsDetailStyle6?id=${id}`
+        //     SmartCity.linkTo({
+        //         innerLink: link
+        //     })
+        // },
+        goDetail(id, index) {
             SmartCity.linkTo({
-                innerLink: link
-            })
+                innerLink: `${this.url}/travel_detail.html?id=${id}`
+            });
         },
         _hideTop() {
             SmartCity.hideTopView({
@@ -700,7 +707,7 @@ var vm = new Vue({
         promiseAll() {
             const _this = this;
             Promise.all([_this.getCityData(), _this.getTipicDetail()])
-                .then(function(result) {
+                .then(function (result) {
                     _this.CityDataList = result[0];
                     _this.tipicDetail = result[1];
                     _this.flag = true;
@@ -732,7 +739,9 @@ var vm = new Vue({
         getScrollHeight() {
             return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
         },
-
+        goBack() {
+            SmartCity.goBack();
+        },
 
 
     },
@@ -740,7 +749,7 @@ var vm = new Vue({
         this._initUserInfo();
         this.promiseAll();
         this._hideTop();
-   //      new VConsole();
+        //      new VConsole();
 
         window.addEventListener('scroll', () => {
             if (this.getScrollTop() + this.getClientHeight() == this.getScrollHeight()) {

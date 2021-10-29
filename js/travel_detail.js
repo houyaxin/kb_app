@@ -32,6 +32,7 @@ var vm = new Vue({
         storage: window.localStorage,
         flag: false,
         videoList: [],
+        url: 'http://mapi.kangbatv.com/h5/kb_app'
     },
     filters: {
         getTimeData(dataTime) {
@@ -57,12 +58,12 @@ var vm = new Vue({
             if (r != null) return unescape(r[2]);
             return null;
         },
-        showCont: function() {
+        showCont: function () {
             this.show = !this.show;
         },
         getComment() {
             this.show = !this.show;
-            this.$nextTick(function() {
+            this.$nextTick(function () {
                 this.$refs.textareaBox.focus()
             })
         },
@@ -87,7 +88,7 @@ var vm = new Vue({
                     })
                     .then(
                         res => {
-                            console.log(res.data,'data');
+                            console.log(res.data, 'data');
                             if (res.data.ErrorCode || res.data.ErrorText) {
                                 return
                             }
@@ -148,23 +149,23 @@ var vm = new Vue({
                 params: param
             }).then(
                 res => {
-		    console.log(res.data,'发布评论')
+                    console.log(res.data, '发布评论')
                     _this.sendCommentData();
                     //setTimeout(() => {
-                      //  _this.showTips = false;
-                   // }, 1500)
+                    //  _this.showTips = false;
+                    // }, 1500)
 
                     _this.showTips = true;
 
-                  //  if (res.data.ErrorCode || res.data.ErrorText) {
+                    //  if (res.data.ErrorCode || res.data.ErrorText) {
                     //    _this.tipMessage = res.data.ErrorText
-                      //  _this.content = '';
-                       // return
+                    //  _this.content = '';
+                    // return
                     //}
                     _this.content = '';
-			
+
                     _this.tipMessage = "发布成功"
-		   console.log(_this.tipMessage,'tipmessage')
+                    console.log(_this.tipMessage, 'tipmessage')
                 }
             )
         },
@@ -219,7 +220,7 @@ var vm = new Vue({
                     .then(
                         res => {
                             resolve(res.data)
-			    console.log(res.data,'评论列表')
+                            console.log(res.data, '评论列表')
                             if (_this.comentData && res.data.length != 0) {
 
                                 res.data.forEach(element => {
@@ -237,10 +238,7 @@ var vm = new Vue({
                     )
             })
         },
-        goAllComment(id, index, ) {
-            console.log(id)
-            window.location.href = `comment.html?id=${id}`
-        },
+
         // 加载更多评论 
         // getMore() {
         // 	this.page++;
@@ -267,7 +265,7 @@ var vm = new Vue({
             }
             if (audioEle) {
                 audioEle.loop = false;
-                audioEle.addEventListener('ended', function() {
+                audioEle.addEventListener('ended', function () {
                     _this.audioFlag = false;
                 }, false);
             }
@@ -277,7 +275,7 @@ var vm = new Vue({
         _initUserInfo() {
             const _this = this;
 
-            SmartCity.getUserInfo(function(res) {
+            SmartCity.getUserInfo(function (res) {
                 if (res && res.userInfo) {
                     _this.access_token = res.userInfo.userTokenKey;
                     _this.storage.setItem('access_token', _this.access_token)
@@ -288,10 +286,10 @@ var vm = new Vue({
         promiseAll() {
             const _this = this;
             Promise.all([_this.getDetailData(), _this.getAllComment()])
-                .then(function(result) {
+                .then(function (result) {
                     _this.CityDataList = result[0];
                     _this.videoList = result[0].videos[0]
-                        // console.log(result) // 输入应该为 ['fun1','fun2']
+                    // console.log(result) // 输入应该为 ['fun1','fun2']
                     _this.hasLogin = new UserInfo().isLogin(_this.access_token)
                     _this.flag = true
                 })
@@ -323,11 +321,30 @@ var vm = new Vue({
         getScrollHeight() {
             return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
         },
+        goAllComment(id, index) {
+            SmartCity.linkTo({
+                innerLink: `${this.url}/comment.html?id=${id}`
+            });
+        },
+        goReport(id, index) {
+            SmartCity.linkTo({
+                innerLink: `${this.url}/report.html?forum_title=${this.CityDataList.forum_title}&title=${this.CityDataList.title}&id=${this.CityDataList.id}`
+            });
+        },
+        goBack() {
+             SmartCity.goBack();
+         },
+        _hideTop() {
+            SmartCity.hideTopView({
+                isShow: 0
+            })
+        }
     },
     created() {
         this._initUserInfo();
-       // this.promiseAll();
-       // new VConsole();
+        this._hideTop();
+        // this.promiseAll();
+        // new VConsole();
         //滚动事件触发
         window.addEventListener('scroll', () => {
             if (this.getScrollTop() + this.getClientHeight() == this.getScrollHeight()) {

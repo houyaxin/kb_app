@@ -44,13 +44,14 @@
         <div class="tab-box">
             <ul class="tab">
                 <li v-for='(item,index) in iconList' :key="index" :class="iconList.length >= 5 ? 'tabMore' : ''">
-                    <a v-if="item.id==2529" :href="'zj.html'">
+                    <a v-if="item.id==2529" @click="goZj()">
                         <div class="font">
                             <img v-lazy="item.indexpic.host?`${item.indexpic.host}${item.indexpic.dir}${item.indexpic.filepath}${item.indexpic.filename}`:'./images/food.png'" alt="">
                         </div>
                         <p>{{item.title}}</p>
                     </a>
-                    <a v-else :href="'food.html?history=1&id='+item.id+'&title='+item.title">
+                    <!-- <a v-else :href="'food.html?history=1&id='+item.id+'&title='+item.title"> -->
+                    <a v-else @click="goHtxqList(item.id)">
                         <div class="font">
                             <img v-lazy="item.indexpic.host?`${item.indexpic.host}${item.indexpic.dir}${item.indexpic.filepath}${item.indexpic.filename}`:'./images/food.png'" alt="">
                         </div>
@@ -65,12 +66,12 @@
             <div class="tipics">
                 <img class="left" src="./images/city.png" alt="">
                 <span>话题推荐</span>
-                <a :href='"tipics_all.html"'><img class="right" src="./images/rightB.png" alt=""></a>
+                <a @click="goTipicsAll()"><img class="right" src="./images/rightB.png" alt=""></a>
             </div>
             <div class="swiper2">
                 <div class="swiper-wrapper swiper_city">
                    <!-- <a class="swiper-slide" :style="'background:url('+item.indexpic.host+item.indexpic.dir+item.indexpic.filepath+item.indexpic.filename+') #999;'+ 'background-size:1.35rem 0.835rem'" v-for='item in cityTipicList' :href="'food.html?history=1&id='+item.id+'&title='+item.title">-->
-	           <a :href='"htxq_list.html?id="+item.id' class="swiper-slide" :style="'background:url('+item.indexpic.host+item.indexpic.dir+item.indexpic.filepath+item.indexpic.filename+') #999;'+ 'background-size:1.35rem 0.835rem'" v-for='item in cityTipicList'>
+	           <a class="swiper-slide" :style="'background:url('+item.indexpic.host+item.indexpic.dir+item.indexpic.filepath+item.indexpic.filename+') #999;'+ 'background-size:1.35rem 0.835rem'" v-for='item in cityTipicList' @click="goHtxqList(item.id)">
                         <h3>#{{item.title}}#</h3>
                         <p>{{item.cares_num}}人参与</p>
                     </a>
@@ -82,10 +83,10 @@
             <div class="tipics">
                 <img class="left" src="./images/hot.png" alt="">
                 <span>热帖推荐</span>
-                <a :href='"hotTipics.html"'><img class="right" src="./images/rightB.png" alt=""></a>
+                <a @click="goHotTipics()"><img class="right" src="./images/rightB.png" alt=""></a>
             </div>
             <div class="swiper-wrapper swiper3">
-                <a class="swiper-slide" v-for="(item,index) in hotData" :key="index" :href='"travel_detail.html?id="+item.id'>
+                <a class="swiper-slide" v-for="(item,index) in hotData" :key="index" @click="goDetail(item.id)">
                     <div class="imgHeight">
                         <img v-lazy="item.indexpic.host
                         +item.indexpic.dir+item.indexpic.filepath+item.indexpic.filename" alt="">
@@ -117,7 +118,7 @@
                 <!-- 最新动态 -->
                 <div class="tab-card" style="display: block;">
                     <div v-for='(item,index) in CityDataList' :key="index">
-                        <a :href='"travel_detail.html?id="+item.id'>
+                        <a @click="goDetail(item.id)">
                             <!-- <div class="gray"></div> -->
                             <div class="news">
                                 <div class="user">
@@ -265,7 +266,7 @@
                 <div class="tab-card">
                     <div v-if="!FriendsDataList.length==0">
                         <div v-for='(item,index) in FriendsDataList' :key="index">
-                            <a :href='"travel_detail.html?id="+item.id'>
+                            <a @click="goDetail(item.id)">
                                 <!-- <div class="gray"></div> -->
                                 <div class="news">
                                     <div class="user">
@@ -448,7 +449,7 @@
 <script src="./assets/vue-lazyload.js"></script>
 <script>
     Vue.use(VueLazyload)
-    Vue.use(VueLazyload, {
+    Vue.use(c, {
         preLoad: 1.3,
         error: './images/default.png',
         // loading: 'dist/loading.gif',

@@ -493,10 +493,18 @@
          getScrollHeight() {
              return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
          },
-
+         goDetail(id, index) {
+            SmartCity.linkTo({
+                innerLink: `${this.url}/travel_detail.html?id=${id}`
+            });
+         },
+         goBack() {
+            SmartCity.goBack();
+        },
      },
      created() {
    //      this.promiseAll()
+    
          this._initUserInfo();
         if (GetQueryString('title')) {
              document.title = decodeURIComponent(GetQueryString('title'))

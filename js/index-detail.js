@@ -65,6 +65,9 @@ var vm = new Vue({
                 isShow: 0
             })
         },
+        goBack() {
+            SmartCity.goBack();
+        },
     },
     created() {
         this._hideTop()

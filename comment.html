@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
     <meta content="telephone=no" name="format-detection" />
     <title>全部评论</title>
     <link rel="stylesheet" href="css/comment.css" />
@@ -17,27 +18,29 @@
 
 <body>
     <div id="app" v-cloak>
-         <header>
-            <a class="head-left" href="javascript:history.go(-1);"></a>
+        <!-- <header>
+            <a class="head-left" @click="goBack()"></a>
             <h3 class="head-center">评论</h3>
-        </header>
-	 <div class="wrapper">
+        </header> -->
+        <div class="wrapper">
             <div class="hot_comment_container">
                 <dl class="hot_comment_containerbox" v-for='(item,index) in allCommentList' :key="index">
                     <dt>
-							<i class="hot_commented_avatar" v-if='!item.avatar || !item.avatar.host' style="background:url(./images/pretemit.png) no-repeat; background-size: contain;"></i>
-							<i class="hot_commented_avatar" v-if='item.avatar && item.avatar.host' :style="'background:url('+item.avatar.host+item.avatar.dir+item.avatar.filepath+item.avatar.filename+') no-repeat; background-size: cover;'"></i>
-							<!-- <img src="./images/pretemit.png" alt="" :key="index1" v-if='!itemUser.avatar || !itemUser.avatar.host'>
+                        <i class="hot_commented_avatar" v-if='!item.avatar || !item.avatar.host'
+                            style="background:url(./images/pretemit.png) no-repeat; background-size: contain;"></i>
+                        <i class="hot_commented_avatar" v-if='item.avatar && item.avatar.host'
+                            :style="'background:url('+item.avatar.host+item.avatar.dir+item.avatar.filepath+item.avatar.filename+') no-repeat; background-size: cover;'"></i>
+                        <!-- <img src="./images/pretemit.png" alt="" :key="index1" v-if='!itemUser.avatar || !itemUser.avatar.host'>
                                     <img :src="`${itemUser.avatar.host}${itemUser.avatar.dir}${itemUser.avatar.filepath}${itemUser.avatar.filename}`"
                                         v-if='itemUser.avatar && itemUser.avatar.host'> -->
-							<div class="hot_commentedsub">
-								<span>{{item.user_name}}</span>
-								<div>
-									<!--<i class="hot_commented_good" @click='dianzan(index,item.id)'></i>
+                        <div class="hot_commentedsub">
+                            <span>{{item.user_name}}</span>
+                            <div>
+                                <!--<i class="hot_commented_good" @click='dianzan(index,item.id)'></i>
 									<span class="hot_commented_num">{{item.like_num}}</span>-->
-								</div>
-							</div>
-						</dt>
+                            </div>
+                        </div>
+                    </dt>
                     <dd>
                         <span>{{item.create_time|getTimeData}}</span>
                         <span>{{item.content}}</span>
@@ -50,6 +53,7 @@
 <script src="./assets/axios.min.js"></script>
 <script src="./assets/vue.js"></script>
 <script src="./assets/vconsole.min.js"></script>
+<script src="./assets/sdk.js"></script>
 <script src="./js/comment.js"></script>
 
 </html>

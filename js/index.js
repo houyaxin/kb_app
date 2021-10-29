@@ -89,13 +89,21 @@ var vm = new Vue({
             });
         },
         goHotTipics() {
-            window.location.href = 'hotTipics.html?_ddtarget=push';
+            SmartCity.linkTo({
+                innerlink: `${this.url}/hotTipics.html`
+            });
+            // window.location.href = 'hotTipics.html?_ddtarget=push';
         },
         goTipicsAll() {
             SmartCity.linkTo({
-                innerlink: "tipics_all.html?_ddtarget=push"
+                innerlink: `${this.url}/tipics_all.html`
             });
             //window.location.href = 'tipics_all.html?_ddtarget=push';
+        },
+        goHtxqList(id,index) {
+            SmartCity.linkTo({
+                innerLink: `${this.url}/htxq_list.html?id=${id}`
+            });
         },
         // 轮播图接口(已完成)
         getLunBo() {
@@ -724,11 +732,16 @@ var vm = new Vue({
             })
 
         },
-        goDetail(index, id) {
-            let link = `xiangqing/NewsDetailStyle6?id=${id}`
+        // goDetail(index, id) {
+        //     let link = `xiangqing/NewsDetailStyle6?id=${id}`
+        //     SmartCity.linkTo({
+        //         innerLink: link
+        //     })
+        // },
+        goDetail(id, index) {
             SmartCity.linkTo({
-                innerLink: link
-            })
+                innerLink: `${this.url}/travel_detail.html?id=${id}`
+            });
         },
         _hideTop() {
             SmartCity.hideTopView({
@@ -777,8 +790,12 @@ var vm = new Vue({
         },
         goBack() {
             SmartCity.goBack();
-        }
-
+        },
+        goZj() {
+            SmartCity.linkTo({
+                innerLink: `${this.url}/zj.html`
+            });
+        },
 
     },
     created() {

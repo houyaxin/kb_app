@@ -313,11 +313,11 @@ div {
     padding-bottom: 0.15rem;
 }
 .brief{
- background:#eee;
+ /* background:#eee;
 font-size:.12rem;
 padding: 0.1rem;
 color:#999;
-margin-top:0.15rem;
+margin-top:0.15rem; */
 }
 .one_pic {
     display: flex;

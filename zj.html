@@ -23,12 +23,12 @@
 <body>
   <div id="app" class="swiper-container">
     <header>
-            <a class="head-left" href="javascript:history.go(-1);"></a>
+            <a class="head-left" @click="goBack()"></a>
             <h3 class="head-center">藏景</h3>
         </header>
     <div class="swiper-wrapper">
       <section class="swiper-slide" :class="`swiper-slide${index+1}`" v-for="(item,index) in list">
-        <a v-if="item.indexpic" :href='"travel_detail.html?id="+item.id'
+        <a v-if="item.indexpic" @click="goDetail(item.id)"
           :style="{background:'url('+`${item.indexpic.host}${item.indexpic.dir}${item.indexpic.filepath}${item.indexpic.filename}`+') no-repeat center center'}">
           <div class="slide-con">
             <p class="brief">{{item.brief.substring(0,30)}}</p>
@@ -46,7 +46,7 @@
   <script src="./assets/axios.min.js"></script>
   <script src="./assets/zepto.min.js"></script>
   <script src="./assets/sdk.js"></script>
-  <!-- <script src="./assets/vconsole.min.js"></script> -->
+  <script src="./assets/vconsole.min.js"></script>
   <!-- <script src="./assets/common.js"></script> -->
   <script src="./js/zj.js"></script>
   <script>

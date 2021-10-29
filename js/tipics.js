@@ -326,6 +326,11 @@
                  innerLink: `${this.url}/myFollow.html`
              });
          },
+         goHtxqList(id,index) {
+            SmartCity.linkTo({
+                innerLink: `${this.url}/htxq_list.html?id=${id}`
+            });
+        },
          goBack() {
              SmartCity.goBack();
          }
